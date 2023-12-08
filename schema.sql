@@ -4,11 +4,11 @@ USE dolphin_crm;
 CREATE TABLE IF NOT EXISTS users
 (
     id         INT PRIMARY KEY AUTO_INCREMENT,
-    firstname  VARCHAR(255)  NOT NULL,
-    lastname   VARCHAR(255)  NOT NULL,
-    email      VARCHAR(255)  NOT NULL,
-    password   VARCHAR(4096) NOT NULL,
-    role       VARCHAR(255)  NOT NULL,
+    firstname  VARCHAR(255)             NOT NULL,
+    lastname   VARCHAR(255)             NOT NULL,
+    email      VARCHAR(255)             NOT NULL UNIQUE,
+    password   VARCHAR(4096)            NOT NULL,
+    role       ENUM ('Admin', 'Member') NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -44,3 +44,11 @@ CREATE TABLE IF NOT EXISTS notes
 
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
+# Create admin user with hashed password
+INSERT INTO users (firstname, lastname, email, password, role)
+VALUES ('Admin',
+        'Admin',
+        'admin@dolphin.com',
+        "$2y$10$79D/XrrvMYaybDMFVxVzOeo2JTHAc/PncKjylq4T5A2MUBF43A36S", # d0lphinadm1n
+        'Admin')

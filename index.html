@@ -12,8 +12,32 @@
 </header>
 <main>
     <aside>
-
+        <form id="login-form">
+            <label>
+                Email
+                <input
+                        id="email"
+                        type="email"
+                        name="email"
+                        placeholder="Enter email address"
+                        required
+                >
+            </label>
+            <label>
+                Password
+                <input
+                        id="password"
+                        type="password"
+                        name="password"
+                        placeholder="Enter password"
+                        required
+                >
+            </label>
+            <button type="submit">Login</button>
+            <div id="error"></div>
+        </form>
     </aside>
 </main>
+<script type="module" src="index.js"></script>
 </body>
 </html>

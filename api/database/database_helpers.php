@@ -7,3 +7,10 @@ $password = $_ENV['DATABASE_PASSWORD'];
 $dbname = $_ENV['DATABASE_NAME'];
 
 $db = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
+
+function query($query, $params = []) {
+    global $db;
+    $stmt = $db->prepare($query);
+    $stmt->execute($params);
+    return $stmt;
+}
