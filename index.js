@@ -12,6 +12,13 @@ import {$post, fetchSession, navigate, objectToFormData} from './utils.js';
     const password = document.getElementById("password");
     const error = document.getElementById("error");
 
+    const PASSWORD_REGEX = /^[a-zA-Z\d]{8,}$/
+
+    if (!PASSWORD_REGEX.test(password.value)) {
+        error.innerText = "Password must be at least 8 characters long at least 1 letter and 1 number"
+        return;
+    }
+
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
         try {
