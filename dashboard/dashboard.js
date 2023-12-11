@@ -9,9 +9,6 @@ import {$get, fetchSession, navigate} from "../utils.js";
 const searchParams = new URLSearchParams(window.location.search)
 let selectedFilter = searchParams.get("filter") || "all";
 
-(async () => {
-})()
-
 const generateChip = (text, color) => {
     const chip = document.createElement('div')
     chip.classList.add('chip')
@@ -75,7 +72,7 @@ const generateChip = (text, color) => {
             typeCell.appendChild(generateChip(user.type, user.type === 'Support' ? '#FFC107' : '#4CAF50'))
 
             const loc = window.location.pathname.replace("http://", '')
-            const url = loc.substring(0, loc.indexOf("/", 1)) + "/dashboard/"
+            const url = loc.substring(0, loc.indexOf("/", 1)) + `/dashboard/contact/index.php?id=${user.id}`
             actionButton.innerText = 'View'
             actionButton.href = url
             actionCell.appendChild(actionButton)

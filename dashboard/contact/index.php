@@ -1,9 +1,57 @@
+<?php
+
+require_once '../../api/utils/api_utils.php';
+require_once '../../api/database/database_helpers.php';
+
+function fetch_contact() {
+    $contact_id = isset($_GET['id']) ? $_GET['id'] : null;
+    if (!$contact_id) {
+        http_response_code(400);
+        return ['error' => 'You must provide the ID of a contact to fetch!'];
+    }
+
+    if (!is_admin() && $contact_id !== $_SESSION['user_id']) {
+        http_response_code(403);
+        return ['error' => "You can't view this contact!"];
+    }
+
+    // Select the contact with the related user and notes
+    $sql = "SELECT contacts.title, contacts.firstname, contacts.lastname,\n"
+        . "contacts.email, contacts.company, contacts.telephone, contacts.created_at, contacts.updated_at, contacts.type, contacts.assigned_to,\n"
+        . "CONCAT(users.firstname, ' ', users.lastname) AS userFullName FROM contacts\n"
+        . "JOIN users WHERE contacts.id = ?;";
+    return query($sql, [$contact_id])->fetch(PDO::FETCH_ASSOC);
+}
+
+function fetch_notes() {
+    $contact_id = isset($_GET['id']) ? $_GET['id'] : null;
+    if (!$contact_id) {
+        http_response_code(400);
+        return ['error' => 'You must provide the ID of a contact to fetch!'];
+    }
+
+    if (!is_admin() && $contact_id !== $_SESSION['user_id']) {
+        http_response_code(403);
+        return ['error' => "You can't view this contact!"];
+    }
+
+    $sql = "SELECT notes.content, notes.contact_id, notes.created_at, users.firstname, users.lastname FROM notes\n"
+        . "JOIN users\n"
+        . "ON notes.created_by = users.id WHERE notes.contact_id = ?;";
+    return query($sql, [$contact_id])->fetchAll(PDO::FETCH_ASSOC);
+}
+
+$contact = fetch_contact();
+$notes = fetch_notes();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main</title>
+    <title>INFO2180 Project 2 - Contact</title>
     <link rel="stylesheet" href="../../styles.css">
 </head>
 <body>
@@ -16,7 +64,6 @@
 <main class="layout">
     <aside class="sidebar">
         <a href="/info2180-finalproject/dashboard" class="sidebar-item">
-            <?xml version="1.0" encoding="utf-8"?>
             <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
             <svg width="30px" height="30px" viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -28,7 +75,6 @@
             <span>Home</span>
         </a>
         <a href="/info2180-finalproject/dashboard/newcontact" class="sidebar-item">
-            <?xml version="1.0" encoding="utf-8"?>
             <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
             <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M10.0376 5.31617L10.6866 6.4791C11.2723 7.52858 11.0372 8.90532 10.1147 9.8278C10.1147 9.8278 10.1147 9.8278 10.1147 9.8278C10.1146 9.82792 8.99588 10.9468 11.0245 12.9755C13.0525 15.0035 14.1714 13.8861 14.1722 13.8853C14.1722 13.8853 14.1722 13.8853 14.1722 13.8853C15.0947 12.9628 16.4714 12.7277 17.5209 13.3134L18.6838 13.9624C20.2686 14.8468 20.4557 17.0692 19.0628 18.4622C18.2258 19.2992 17.2004 19.9505 16.0669 19.9934C14.1588 20.0658 10.9183 19.5829 7.6677 16.3323C4.41713 13.0817 3.93421 9.84122 4.00655 7.93309C4.04952 6.7996 4.7008 5.77423 5.53781 4.93723C6.93076 3.54428 9.15317 3.73144 10.0376 5.31617Z"
@@ -37,7 +83,6 @@
             <span>New Contact</span>
         </a>
         <a href="/info2180-finalproject/dashboard/users" class="sidebar-item">
-            <?xml version="1.0" encoding="utf-8"?>
             <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
             <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M14 12.25C13.2583 12.25 12.5333 12.0301 11.9166 11.618C11.2999 11.206 10.8193 10.6203 10.5355 9.93506C10.2516 9.24984 10.1774 8.49584 10.3221 7.76841C10.4668 7.04098 10.8239 6.3728 11.3484 5.84835C11.8728 5.3239 12.541 4.96675 13.2684 4.82206C13.9958 4.67736 14.7498 4.75162 15.4351 5.03545C16.1203 5.31928 16.706 5.79993 17.118 6.41661C17.5301 7.0333 17.75 7.75832 17.75 8.5C17.75 9.49456 17.3549 10.4484 16.6517 11.1517C15.9484 11.8549 14.9946 12.25 14 12.25ZM14 6.25C13.555 6.25 13.12 6.38196 12.75 6.62919C12.38 6.87643 12.0916 7.22783 11.9213 7.63896C11.751 8.0501 11.7064 8.5025 11.7932 8.93895C11.8801 9.37541 12.0943 9.77632 12.409 10.091C12.7237 10.4057 13.1246 10.62 13.561 10.7068C13.9975 10.7936 14.4499 10.749 14.861 10.5787C15.2722 10.4084 15.6236 10.12 15.8708 9.75003C16.118 9.38002 16.25 8.94501 16.25 8.5C16.25 7.90326 16.0129 7.33097 15.591 6.90901C15.169 6.48705 14.5967 6.25 14 6.25Z"
@@ -53,7 +98,6 @@
         </a>
         <hr class="divider"/>
         <div class="sidebar-item logout-button">
-            <?xml version="1.0" encoding="utf-8"?>
             <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
             <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="Interface / Log_Out">
@@ -65,61 +109,73 @@
             <span>Logout</span>
         </div>
     </aside>
-    <section class="main-layout">
-        <h1>Create a New Contact</h1>
-        <form id="new-contact-form">
-            <label for="title">
-                Title
-                <select id="title" name="title" required>
-                    <option value="Mr">Mr.</option>
-                    <option value="Ms">Ms.</option>
-                    <option value="Mrs">Mrs.</option>
-                    <option value="Dr">Dr.</option>
-                </select>
-            </label>
-            <div class="flex gap-4">
-                <label for="firstname">
-                    First Name
-                    <input type="text" id="firstname" name="firstName" required>
-                </label>
-                <label for="lastname">Last Name
-                    <input type="text" id="lastname" name="lastName" required>
-                </label>
+    <section class="main-layout space-y-6">
+        <div class="dashboard-heading">
+            <div>
+                <div>
+                    <h1><?php echo $contact['title'] . ". " . $contact['firstname'] . " " . $contact['lastname'] ?></h1>
+                    <h3 class="subtitle">Created on <?php
+                        $date = date_create($contact['created_at']);
+                        echo date_format($date, 'F j, Y');
+                        ?> by <?php echo $contact['userFullName'] ?>
+                    </h3>
+                    <h3 class="subtitle">
+                        Updated on <?php
+                        $date = date_create($contact['updated_at']);
+                        echo date_format($date, 'F j, Y');
+                        ?>
+                    </h3>
+                </div>
             </div>
             <div class="flex gap-4">
-                <label for="email">Email
-                    <input type="email" id="email" name="email" required>
-                </label>
-                <label for="telephone">Telephone
-                    <input type="tel" id="telephone" name="telephone" required>
-                </label>
+                <?php if ($contact['assigned_to'] !== $_SESSION['user_id']): ?>
+                    <button id="assign-to-self-btn">Assign to me</button>
+                <?php endif; ?>
+                <button id="switch-btn">Switch to <?php echo $contact['type'] === 'Sales Lead' ? 'Support' : 'Sales Lead' ?></button>
             </div>
-            <label for="company">Company
-                <input type="text"
-                       id="company"
-                       name="company"
-                       required
-                >
-            </label>
-            <div class="flex gap-4">
-                <label for="type">Type
-                    <select id="type" name="type" required>
-                        <option value="Sales Lead">Sales Lead</option>
-                        <option value="Support">Support</option>
-                    </select>
-                </label>
-                <label for="assignedToSelect">Assigned To
-                    <select id="assignedToSelect" name="assigned_to" required>
-                    </select>
-                </label>
+        </div>
+        <div class="default-container grid grid-cols-2 gap-4">
+            <div>
+                <p class="mini-heading">Email</p>
+                <p><?php echo $contact['email'] ?></p>
             </div>
-            <div class="flex">
-                <button type="submit">Create Contact</button>
+            <div>
+                <p class="mini-heading">Telephone</p>
+                <p><?php echo $contact['telephone'] ?></p>
             </div>
-        </form>
+            <div>
+                <p class="mini-heading">Company</p>
+                <p><?php echo $contact['company'] ?></p>
+            </div>
+            <div>
+                <p class="mini-heading">Assigned To</p>
+                <p><?php echo $contact['userFullName'] ?></p>
+            </div>
+        </div>
+        <div class="default-container space-y-6">
+            <h3 style="margin-bottom: 4rem;">Notes</h3>
+            <div id="notes-container" style="margin-bottom: 4rem;" class="space-y-6">
+                <?php foreach ($notes as $note): ?>
+                    <div class="note">
+                        <h6 class="mini-heading"><?php echo $note['firstname'] . " " . $note['lastname'] ?></h6>
+                        <p><?php echo $note['content'] ?></p>
+                        <p class="subtitle"><?php
+                            $date = date_create($note['created_at']);
+                            echo date_format($date, 'F j, Y');
+                            ?></p>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <form id="note-form" class="space-y-6">
+                <label>
+                    Add a note about <?php echo $contact['firstname'] ?>
+                    <textarea name="note" id="note-textarea" cols="30" rows="10"></textarea>
+                </label>
+                <button type="submit">Add Note</button>
+            </form>
+        </div>
     </section>
 </main>
-<script type="module" src="../../logout-handler.js"></script>
-<script type="module" src="newContact.js"></script>
+<script type="module" src="contact.js"></script>
 </body>
 </html>

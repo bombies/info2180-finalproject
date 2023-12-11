@@ -25,6 +25,7 @@ function handle_post($callback) {
 }
 
 function is_admin() {
-    session_start();
+    if (!isset($_SESSION))
+        session_start();
     return $_SESSION['role'] === 'Admin';
 }

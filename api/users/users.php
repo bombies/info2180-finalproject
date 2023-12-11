@@ -1,4 +1,5 @@
 <?php
+
 require_once '../database/database_helpers.php';
 require_once '../utils/api_utils.php';
 
