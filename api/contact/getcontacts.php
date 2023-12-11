@@ -11,5 +11,26 @@ handle_get(function () {
         return ['error' => 'Not logged in'];
     }
 
-    return query("SELECT CONCAT(title, '. ', firstname, ' ', lastname) AS fullname, email, company, type, id from contacts;")->fetchAll(PDO::FETCH_ASSOC);
+    $filter = isset($_GET['filter']) ? $_GET['filter'] : null;
+    $whereQuery = '';
+    $whereParams = [];
+    switch ($filter) {
+        case 'assigned':
+            $whereQuery = 'WHERE assigned_to = ?';
+            $whereParams = [$_SESSION['user_id']];
+            break;
+        case 'sales':
+            $whereQuery = 'WHERE type = ?';
+            $whereParams = ['Sales Lead'];
+            break;
+        case "support":
+            $whereQuery = 'WHERE type = ?';
+            $whereParams = ['Support'];
+            break;
+    }
+
+    return query(
+        "SELECT CONCAT(title, '. ', firstname, ' ', lastname) AS fullname, email, company, type, id from contacts $whereQuery;",
+        $whereParams
+    )->fetchAll(PDO::FETCH_ASSOC);
 });

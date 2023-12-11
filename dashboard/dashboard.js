@@ -6,8 +6,11 @@ import {$get, fetchSession, navigate} from "../utils.js";
         navigate('/')
 })();
 
+const searchParams = new URLSearchParams(window.location.search)
+let selectedFilter = searchParams.get("filter") || "all";
 
-let selectedFilter = 'all';
+(async () => {
+})()
 
 const generateChip = (text, color) => {
     const chip = document.createElement('div')
@@ -25,22 +28,21 @@ const generateChip = (text, color) => {
             button.classList.add('active')
 
         button.addEventListener('click', () => {
+            if (button.id === selectedFilter)
+                button.classList.add('active')
             buttons.forEach(button => button.classList.remove('active'))
-            button.classList.add('active')
-            selectedFilter = button.id
         })
     })
 })();
 
 (async () => {
     const tableBody = document.getElementById("user-table-body");
-    const users = await $get("/api/contact/getcontacts.php")
+    const users = await $get(`/api/contact/getcontacts.php?filter=${selectedFilter}`)
         .then(res => res.json())
         .catch(e => {
             console.error(e)
             return undefined
         })
-
 
     if (!users || !users.length) {
         const row = document.createElement('tr')
