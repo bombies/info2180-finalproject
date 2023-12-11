@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INFO2180 Project 2 - Contacts</title>
+    <title>Main</title>
     <link rel="stylesheet" href="../../styles.css">
 </head>
 <body>
@@ -27,14 +27,14 @@
             </svg>
             <span>Home</span>
         </a>
-        <a href="/info2180-finalproject/dashboard/contacts" class="sidebar-item">
+        <a href="/info2180-finalproject/dashboard/newcontact" class="sidebar-item">
             <?xml version="1.0" encoding="utf-8"?>
             <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
             <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M10.0376 5.31617L10.6866 6.4791C11.2723 7.52858 11.0372 8.90532 10.1147 9.8278C10.1147 9.8278 10.1147 9.8278 10.1147 9.8278C10.1146 9.82792 8.99588 10.9468 11.0245 12.9755C13.0525 15.0035 14.1714 13.8861 14.1722 13.8853C14.1722 13.8853 14.1722 13.8853 14.1722 13.8853C15.0947 12.9628 16.4714 12.7277 17.5209 13.3134L18.6838 13.9624C20.2686 14.8468 20.4557 17.0692 19.0628 18.4622C18.2258 19.2992 17.2004 19.9505 16.0669 19.9934C14.1588 20.0658 10.9183 19.5829 7.6677 16.3323C4.41713 13.0817 3.93421 9.84122 4.00655 7.93309C4.04952 6.7996 4.7008 5.77423 5.53781 4.93723C6.93076 3.54428 9.15317 3.73144 10.0376 5.31617Z"
                       stroke="#000000" stroke-width="1.5" stroke-linecap="round"/>
             </svg>
-            <span>Contact</span>
+            <span>New Contact</span>
         </a>
         <a href="/info2180-finalproject/dashboard/users" class="sidebar-item">
             <?xml version="1.0" encoding="utf-8"?>
@@ -66,7 +66,48 @@
         </div>
     </aside>
     <section class="main-layout">
-
+        <h1>Create a New Contact</h1>
+        <form id="new-contact-form" action="" method="post">
+            <label for="title">
+                Title
+                <input type="text" id="title" name="title" required>
+            </label>
+            <div class="flex gap-4">
+                <label for="firstName">
+                    First Name
+                    <input type="text" id="firstName" name="firstName" required>
+                </label>
+                <label for="lastName">Last Name
+                    <input type="text" id="lastName" name="lastName" required>
+                </label>
+            </div>
+            <div class="flex gap-4">
+                <label for="email">Email
+                    <input type="email" id="email" name="email" required>
+                </label>
+                <label for="telephone">Telephone
+                    <input type="tel" id="telephone" name="telephone">
+                </label>
+            </div>
+            <label for="company">Company
+                <input type="text" id="company" name="company">
+            </label>
+            <div class="flex gap-4">
+                <label for="type">Type
+                    <select id="type" name="type">
+                        <option value="sales">Sales Lead</option>
+                        <option value="support">Support</option>
+                    </select>
+                </label>
+                <label for="assignedTo">Assigned To
+                    <select id="assignedTo" name="assignedTo">
+                        <option value="user1">User 1</option>
+                        <option value="user2">User 2</option>
+                    </select>
+                </label>
+            </div>
+            <button type="submit">Create Contact</button>
+        </form>
     </section>
 </main>
 <script type="module" src="../../logout-handler.js"></script>

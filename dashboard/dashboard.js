@@ -51,7 +51,7 @@ const generateChip = (text, color) => {
         cell.style.color = '#1A1A1A20'
         cell.style.fontSize = '32px'
 
-        cell.innerText = 'No users found'
+        cell.innerText = 'No contacts found'
         cell.colSpan = 5
 
         row.appendChild(cell)
