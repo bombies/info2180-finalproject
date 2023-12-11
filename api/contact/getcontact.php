@@ -8,7 +8,7 @@ handle_get(function (){
     $contactid = isset($params['contactid']) ? $params['contactid'] : null;
     $sql = "SELECT CONCAT(contacts.title, '. ', contacts.firstname, ' ', contacts.lastname) AS fullname, \n"
 
-    . "contacts.email, contacts.company, contacts.telephone, contacts.created_at, contacts.updated_at,\n"
+    . "contacts.email, contacts.company, contacts.telephone, contacts.created_at, contacts.updated_at, contacts.type,\n"
 
     . "CONCAT(users.firstname, ' ',users.lastname) AS userfullname FROM contacts\n"
 
