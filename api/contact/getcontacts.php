@@ -29,6 +29,11 @@ handle_get(function () {
             break;
     }
 
+    if (!is_admin()) {
+        $whereQuery = 'WHERE assigned_to = ?';
+        $whereParams = [$_SESSION['user_id']];
+    }
+
     return query(
         "SELECT CONCAT(title, '. ', firstname, ' ', lastname) AS fullname, email, company, type, id from contacts $whereQuery;",
         $whereParams

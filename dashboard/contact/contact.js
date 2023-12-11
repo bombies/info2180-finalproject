@@ -14,8 +14,8 @@ const searchParams = new URLSearchParams(window.location.search);
         return;
 
     const noteInput = document.getElementById('note-textarea')
-    noteForm.addEventListener('submit', async (e) => {
-        e.preventDefault()
+    noteForm.addEventListener('submit', async (event) => {
+        event.preventDefault()
 
         const body = {
             content: noteInput.value,
@@ -33,6 +33,8 @@ const searchParams = new URLSearchParams(window.location.search);
             alert('Failed to add note')
             return
         }
+
+        noteForm.reset()
 
         const notesContainer = document.getElementById('notes-container')
         const noteContainer = document.createElement('div')

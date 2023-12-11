@@ -9,7 +9,7 @@
 <body>
 <header class="overhead">
     <div class="nav-brand">
-        <img src="../../images/Dolphin.png" alt="Dolphin">
+        <img src="../../../images/Dolphin.png" alt="Dolphin">
         <p>Dolphin CRM</p>
     </div>
 </header>
@@ -108,21 +108,22 @@
                         >
                     </label>
                 </div>
-                <label for="Role">
+                <label for="role">
                     Role
-                    <select id="Role" required>
+                    <select id="role" required>
                         <option value="Member">Member</option>
                         <option value="Admin">Admin</option>
                     </select>
                 </label>
                 <div class="flex">
-                    <button type="submit">Save</button>
+                    <button type="submit">Register User</button>
                 </div>
-                <div id="error"></div>
+                <div id="error" class="error"></div>
             </form>
         </div>
     </section>
 </main>
 <script type="module" src="../../../logout-handler.js"></script>
+<script type="module" src="newUser.js"></script>
 </body>
 </html>

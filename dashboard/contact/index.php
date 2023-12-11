@@ -10,38 +10,43 @@ function fetch_contact() {
         return ['error' => 'You must provide the ID of a contact to fetch!'];
     }
 
-    if (!is_admin() && $contact_id !== $_SESSION['user_id']) {
+    // Select the contact with the related user and notes
+    $sql = "SELECT contacts.id, contacts.title, contacts.firstname, contacts.lastname,\n"
+        . "contacts.email, contacts.company, contacts.telephone, contacts.created_at, contacts.updated_at, contacts.type, contacts.assigned_to,\n"
+        . "CONCAT(au.firstname, ' ', au.lastname) AS assignedFullName,\n"
+        . "CONCAT(cu.firstname, ' ', cu.lastname) AS creatorFullName FROM contacts\n"
+        . "JOIN users as au ON contacts.assigned_to = au.id\n"
+        . "JOIN users as cu ON contacts.created_by = cu.id\n"
+        . "WHERE contacts.id = ?;";
+
+    $contact = query($sql, [$contact_id])->fetch(PDO::FETCH_ASSOC);
+
+    if (!is_admin() && $contact['assigned_to'] !== $_SESSION['user_id']) {
         http_response_code(403);
-        return ['error' => "You can't view this contact!"];
+        $contact = null;
     }
 
-    // Select the contact with the related user and notes
-    $sql = "SELECT contacts.title, contacts.firstname, contacts.lastname,\n"
-        . "contacts.email, contacts.company, contacts.telephone, contacts.created_at, contacts.updated_at, contacts.type, contacts.assigned_to,\n"
-        . "CONCAT(users.firstname, ' ', users.lastname) AS userFullName FROM contacts\n"
-        . "JOIN users WHERE contacts.id = ?;";
-    return query($sql, [$contact_id])->fetch(PDO::FETCH_ASSOC);
+    return $contact;
 }
 
-function fetch_notes() {
-    $contact_id = isset($_GET['id']) ? $_GET['id'] : null;
-    if (!$contact_id) {
-        http_response_code(400);
-        return ['error' => 'You must provide the ID of a contact to fetch!'];
-    }
+$contact = fetch_contact();
 
-    if (!is_admin() && $contact_id !== $_SESSION['user_id']) {
+function fetch_notes() {
+    global $contact;
+    if (!$contact)
+        return null;
+
+    if (!is_admin() && $contact['assigned_to'] !== $_SESSION['user_id']) {
         http_response_code(403);
-        return ['error' => "You can't view this contact!"];
+        $contact = null;
     }
 
     $sql = "SELECT notes.content, notes.contact_id, notes.created_at, users.firstname, users.lastname FROM notes\n"
         . "JOIN users\n"
         . "ON notes.created_by = users.id WHERE notes.contact_id = ?;";
-    return query($sql, [$contact_id])->fetchAll(PDO::FETCH_ASSOC);
+    return query($sql, [$contact['id']])->fetchAll(PDO::FETCH_ASSOC);
 }
 
-$contact = fetch_contact();
 $notes = fetch_notes();
 
 ?>
@@ -117,7 +122,7 @@ $notes = fetch_notes();
                     <h3 class="subtitle">Created on <?php
                         $date = date_create($contact['created_at']);
                         echo date_format($date, 'F j, Y');
-                        ?> by <?php echo $contact['userFullName'] ?>
+                        ?> by <?php echo $contact['creatorFullName'] ?>
                     </h3>
                     <h3 class="subtitle">
                         Updated on <?php
@@ -131,7 +136,8 @@ $notes = fetch_notes();
                 <?php if ($contact['assigned_to'] !== $_SESSION['user_id']): ?>
                     <button id="assign-to-self-btn">Assign to me</button>
                 <?php endif; ?>
-                <button id="switch-btn">Switch to <?php echo $contact['type'] === 'Sales Lead' ? 'Support' : 'Sales Lead' ?></button>
+                <button id="switch-btn">Switch
+                    to <?php echo $contact['type'] === 'Sales Lead' ? 'Support' : 'Sales Lead' ?></button>
             </div>
         </div>
         <div class="default-container grid grid-cols-2 gap-4">
@@ -149,7 +155,7 @@ $notes = fetch_notes();
             </div>
             <div>
                 <p class="mini-heading">Assigned To</p>
-                <p><?php echo $contact['userFullName'] ?></p>
+                <p><?php echo $contact['assignedFullName'] ?></p>
             </div>
         </div>
         <div class="default-container space-y-6">
@@ -176,6 +182,7 @@ $notes = fetch_notes();
         </div>
     </section>
 </main>
+<script type="module" src="../../logout-handler.js"></script>
 <script type="module" src="contact.js"></script>
 </body>
 </html>
