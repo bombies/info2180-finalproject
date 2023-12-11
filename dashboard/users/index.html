@@ -69,39 +69,55 @@
         <h1>New User</h1>
         <div>
             <form id="registration-form">
-                <label for="Fname">First Name</label>
-                <input id="Fname"
-                       type="Fname"
-                       name="Fname"
-                       placeholder="Enter First name"
-                >
-                <label for="Lname">Last Name</label>
-                <input id="Lname"
-                       type="Lname"
-                       name="Lname"
-                       placeholder="Enter last name"
-                >
-                <label for="email">Email</label>
-                <input id="email"
-                       type="email"
-                       name="email"
-                       placeholder="Enter email address"
-                       required
-                >
-                <label for="password">Password</label>
-                <input id="password"
-                       type="password"
-                       name="password"
-                       minlength="8"
-                       placeholder="Enter password"
-                       required
-                >
-                <label for="Role" class="label-layout">Role </label>
-                <select id="Role" required>
-                    <option value="Admin">Administration</option>
-                    <option value="Member">Member</option>
-                </select>
-                <button type="submit">Save</button>
+                <div class="flex gap-4">
+                    <label for="first_name">
+                        First Name
+                        <input id="first_name"
+                               name="first_name"
+                               placeholder="Enter First name"
+                               required
+                        >
+                    </label>
+                    <label for="last_name">
+                        Last Name
+                        <input id="last_name"
+                               name="last_name"
+                               placeholder="Enter last name"
+                               required
+                        >
+                    </label>
+                </div>
+                <div class="flex gap-4">
+                    <label for="email">
+                        Email
+                        <input id="email"
+                               type="email"
+                               name="email"
+                               placeholder="Enter email address"
+                               required
+                        >
+                    </label>
+                    <label for="password">
+                        Password
+                        <input id="password"
+                               type="password"
+                               name="password"
+                               minlength="8"
+                               placeholder="Enter password"
+                               required
+                        >
+                    </label>
+                </div>
+                <label for="Role">
+                    Role
+                    <select id="Role" required>
+                        <option value="Member">Member</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                </label>
+                <div class="flex">
+                    <button type="submit">Save</button>
+                </div>
                 <div id="error"></div>
             </form>
         </div>
