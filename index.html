@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>INFO2180 Project 2</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="index.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
 <header class="overhead">
@@ -14,39 +13,35 @@
     </div>
 </header>
 <main>
-    
-    <div class="container">
-        <aside>
-            <div class="Login"><strong>Login</strong> <br></div>
+    <div class="login-container">
+        <div class="login-card">
+            <h1>Login</h1>
             <form id="login-form">
-                <label>
-                    <input
-                            id="email"
-                            type="email"
-                            name="email"
-                            placeholder="Enter email address"
-                            required
-                    >
-                </label>
-                <label>
-
-                    <input
-                            id="password"
-                            type="password"
-                            name="password"
-                            minlength="8"
-                            placeholder="Enter password"
-                            required
-                    >
-                </label>
-                <a href="dashboard/index.html"><button type="submit" >Login</button></a>
-                <div id="error" class="error"></div>
+                <label for="email">Email</label>
+                <input
+                        id="email"
+                        type="email"
+                        name="email"
+                        placeholder="Enter email address"
+                        required
+                />
+                <label for="password">Password</label>
+                <input
+                        id="password"
+                        type="password"
+                        name="password"
+                        placeholder="Enter password"
+                        required
+                >
+                <div>
+                    <button type="submit">Login</button>
+                </div>
+                <p id="error" class="error"></p>
             </form>
-        </aside>
-       
+        </div>
     </div>
 </main>
-<script type="module" src="index.js"></script>
 <footer><br>Copyright © 2022 Dolphin CRM</footer>
+<script type="module" src="index.js"></script>
 </body>
 </html>

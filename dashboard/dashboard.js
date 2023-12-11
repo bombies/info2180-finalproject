@@ -1,3 +1,12 @@
+import {fetchSession, navigate} from "../utils.js";
+
+(async () => {
+    const session = await fetchSession()
+    if (!session)
+        navigate('/')
+})();
+
+
 let selectedFilter = 'all';
 
 const generateChip = (text, color) => {
@@ -10,7 +19,7 @@ const generateChip = (text, color) => {
 
 
 (() => {
-    const buttons = document.querySelectorAll('.dash-container-filter-bar button')
+    const buttons = document.querySelectorAll('.dash-container-filter-bar .underlined-btn')
     buttons.forEach(button => {
         if (button.id === selectedFilter)
             button.classList.add('active')
