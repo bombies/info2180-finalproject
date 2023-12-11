@@ -34,5 +34,5 @@ handle_post(function () {
 
 function create_user($email, $password, $firstname, $lastname, $role) {
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    return query('INSERT INTO users (email, password, firstname, lastname, role) VALUES (?, ?, ?, ?, ?)', [$email, $hashed_password, $firstname, $lastname, $role])->execute();
+    return query('INSERT INTO users (email, password, firstname, lastname, role) VALUES (?, ?, ?, ?, ?)', [$email, $hashed_password, $firstname, $lastname, $role]);
 }

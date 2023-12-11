@@ -8,5 +8,5 @@ handle_get(function() {
         return ['error' => "You can't view all users!"];
     }
 
-    return query("SELECT firstname, lastname, role, email, created_at FROM users;")->fetchAll(PDO::FETCH_ASSOC);
+    return query("SELECT firstname, lastname, role, email, created_at, id FROM users;")->fetchAll(PDO::FETCH_ASSOC);
 });

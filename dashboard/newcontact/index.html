@@ -67,18 +67,18 @@
     </aside>
     <section class="main-layout">
         <h1>Create a New Contact</h1>
-        <form id="new-contact-form" action="" method="post">
+        <form id="new-contact-form">
             <label for="title">
                 Title
                 <input type="text" id="title" name="title" required>
             </label>
             <div class="flex gap-4">
-                <label for="firstName">
+                <label for="firstname">
                     First Name
-                    <input type="text" id="firstName" name="firstName" required>
+                    <input type="text" id="firstname" name="firstName" required>
                 </label>
-                <label for="lastName">Last Name
-                    <input type="text" id="lastName" name="lastName" required>
+                <label for="lastname">Last Name
+                    <input type="text" id="lastname" name="lastName" required>
                 </label>
             </div>
             <div class="flex gap-4">
@@ -86,23 +86,25 @@
                     <input type="email" id="email" name="email" required>
                 </label>
                 <label for="telephone">Telephone
-                    <input type="tel" id="telephone" name="telephone">
+                    <input type="tel" id="telephone" name="telephone" required>
                 </label>
             </div>
             <label for="company">Company
-                <input type="text" id="company" name="company">
+                <input type="text"
+                       id="company"
+                       name="company"
+                       required
+                >
             </label>
             <div class="flex gap-4">
                 <label for="type">Type
-                    <select id="type" name="type">
-                        <option value="sales">Sales Lead</option>
-                        <option value="support">Support</option>
+                    <select id="type" name="type" required>
+                        <option value="Sales Lead">Sales Lead</option>
+                        <option value="Support">Support</option>
                     </select>
                 </label>
-                <label for="assignedTo">Assigned To
-                    <select id="assignedTo" name="assignedTo">
-                        <option value="user1">User 1</option>
-                        <option value="user2">User 2</option>
+                <label for="assignedToSelect">Assigned To
+                    <select id="assignedToSelect" name="assigned_to" required>
                     </select>
                 </label>
             </div>
@@ -113,5 +115,6 @@
     </section>
 </main>
 <script type="module" src="../../logout-handler.js"></script>
+<script type="module" src="newContact.js"></script>
 </body>
 </html>

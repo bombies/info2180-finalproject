@@ -8,7 +8,7 @@ function handle_call($callback) {
     } catch (Exception $e) {
         http_response_code(500);
         header('Content-Type: application/json');
-        echo json_encode(['error' => $e->getMessage()]);
+        echo $e;
     }
 }
 
