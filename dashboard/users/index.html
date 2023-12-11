@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INFO2180 Project 2 - Users</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <script src="../../index.js"></script>
+    <style>
+        main {
+            flex: 1;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+<header class="overhead">
+    <div class="nav-brand">
+        <img src="../../images/Dolphin.png" alt="Dolphin">
+        <p>Dolphin CRM</p>
+    </div>
+</header>
+<div class="layout">
+    <nav>
+        <a href="#" class=""><img src="../../images/home.png" alt=""> Home</a>
+        <a href="#" class=""><img src="../../images/Contact.jpg" alt=""> New Contact</a>
+        <a href="#"> <img src="../../images/group.png" alt=""> Users</a>
+        <a href="#"> <img src="../../images/logout.png" alt="">Logout</a>
+
+    </nav>
+    <main>
+        <h1>New User</h1>
+        <div class="main-layout">
+            <aside id="registration- form- contianer">
+                <form id="Registration ">
+                    <label class="label-layout">
+                        First-Name
+                        <input class="input-layout"
+                               id="Fname"
+                               type="Fname"
+                               name="Fname"
+                               placeholder="Enter First name">
+                    </label>
+                    <label class="label-layout">
+                        Last-Name
+                        <input class="input-layout"
+                               id="Lname"
+                               type="Lname"
+                               name="Lname"
+                               placeholder="Enter last name">
+                    </label>
+                    <label class="label-layout">
+                        Email
+                        <input class="input-layout"
+                               id="email"
+                               type="email"
+                               name="email"
+                               placeholder="Enter email address"
+                               required
+                        >
+                    </label>
+                    <label class="label-layout">
+                        Password
+                        <input class="input-layout"
+                               id="password"
+                               type="password"
+                               name="password"
+                               minlength="8"
+                               placeholder="Enter password"
+                               required
+                        ></label>
+                    <label for="Role" class="label-layout">Select your Role </label>
+                    <select id="Role" position="Role" required>
+                        <option value="Admin">Administration</option>
+                        <option value="Member">Member</option>
+                    </select>
+                    <button type="save" class="save-btn">save</button>
+                    <div id="error"></div>
+
+                </form>
+            </aside>
+        </div>
+    </main>
+</div>
+</body>
+</html>

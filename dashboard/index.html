@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INFO2180 Project 2 - Dashboard</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<header class="overhead">
+    <div class="nav-brand">
+        <img src="../images/Dolphin.png" alt="Dolphin">
+        <p>Dolphin CRM</p>
+    </div>
+</header>
+<main class="layout">
+    <aside class="sidebar">
+        <a href="/dashboard" class="sidebar-item"><img src="../images/home.png" alt=""> <span>Home</span></a>
+        <a href="/dashboard/contacts" class="sidebar-item"><img src="../images/Contact.jpg" alt=""> <span>Contact</span></a>
+        <a href="/dashboard/users" class="sidebar-item"> <img src="../images/group.png" alt=""> <span>Users</span></a>
+        <div class="sidebar-item logout-button"><img src="../images/logout.png" alt=""> <span>Logout</span></div>
+    </aside>
+    <section class="main-layout">
+        <div class="dashboard-heading">
+            <h1>Dashboard</h1>
+            <button class="cta-button">Add New Contact</button>
+        </div>
+        <div class="default-container">
+            <div class="dash-container-filter-bar">
+                <div>
+                    <p class="font-bold">Filter By:</p>
+                </div>
+                <button class="underlined-btn" id="all">All</button>
+                <button class="underlined-btn" id="sales">Sales Leads</button>
+                <button class="underlined-btn" id="support">Support</button>
+                <button class="underlined-btn" id="assigned">Assigned to me</button>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Company</th>
+                    <th>Type</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody id="user-table-body"></tbody>
+            </table>
+        </div>
+    </section>
+</main>
+<script type="module" src="dashboard.js"></script>
+</body>
+</html>
