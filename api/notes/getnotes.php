@@ -7,10 +7,8 @@ handle_get(function () {
     $params = $_GET;
     $contactid = isset($params['contactid']) ? $params['contactid'] : null;
     $sql = "SELECT notes.content, notes.contact_id, users.firstname, users.lastname FROM notes\n"
-
         . "JOIN users\n"
-
-        . "ON notes.created_by = users.id;";
+        . "ON notes.created_by = users.id WHERE notes.contact_id = ?;";
     $notes = query($sql, [$contactid])->fetchAll(PDO::FETCH_ASSOC);
     return json_encode($notes);
 });
