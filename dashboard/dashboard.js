@@ -1,4 +1,4 @@
-import {fetchSession, navigate} from "../utils.js";
+import {$get, fetchSession, navigate} from "../utils.js";
 
 (async () => {
     const session = await fetchSession()
@@ -32,14 +32,15 @@ const generateChip = (text, color) => {
     })
 })();
 
-(() => {
+(async () => {
     const tableBody = document.getElementById("user-table-body");
-    const users = [{
-        name: 'John Doe',
-        email: 'john.doe@gmail.com',
-        company: 'KFC',
-        status: 'Support'
-    }] // TODO: get users from server
+    const users = await $get("/api/contact/getcontacts.php")
+        .then(res => res.json())
+        .catch(e => {
+            console.error(e)
+            return undefined
+        })
+
 
     if (!users || !users.length) {
         const row = document.createElement('tr')
@@ -65,11 +66,11 @@ const generateChip = (text, color) => {
             const actionCell = document.createElement('td')
             const actionButton = document.createElement('a')
 
-            nameCell.innerText = user.name
+            nameCell.innerText = user.fullname
             emailCell.innerText = user.email
             companyCell.innerText = user.company
 
-            typeCell.appendChild(generateChip(user.status, user.status === 'Support' ? '#FFC107' : '#4CAF50'))
+            typeCell.appendChild(generateChip(user.type, user.type === 'Support' ? '#FFC107' : '#4CAF50'))
 
             const loc = window.location.pathname.replace("http://", '')
             const url = loc.substring(0, loc.indexOf("/", 1)) + "/dashboard/"

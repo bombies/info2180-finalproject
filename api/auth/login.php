@@ -14,7 +14,7 @@ handle_post(function () {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['role'] = $user['role'];
         http_response_code(200);
-        return json_encode(['user_id' => $user['id']]);
+        return ['user_id' => $user['id']];
     } else {
         http_response_code(401);
         return null;

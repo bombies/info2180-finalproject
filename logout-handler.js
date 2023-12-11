@@ -1,4 +1,4 @@
-import {$post} from "./utils.js";
+import {$post, navigate} from "./utils.js";
 
 (() => {
     const logoutButton = document.querySelector('.logout-button');
@@ -7,7 +7,7 @@ import {$post} from "./utils.js";
 
     logoutButton.addEventListener('click', () => {
         $post('/api/auth/logout.php')
-            .then(() => window.location.reload())
+            .then(() => navigate("/"))
             .catch(e => console.error(e))
     })
 })()

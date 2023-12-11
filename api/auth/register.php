@@ -6,7 +6,7 @@ require_once '../utils/api_utils.php';
 handle_post(function () {
     if (!is_admin()) {
         http_response_code(403);
-        return json_encode(['error' => "You can't register users!"]);
+        return ['error' => "You can't register users!"];
     }
 
     $body = $_POST;
@@ -19,17 +19,17 @@ handle_post(function () {
     $user = query('SELECT * FROM users WHERE email = ?', [$email])->fetch();
     if ($user) {
         http_response_code(409);
-        return json_encode(['error' => 'User already exists']);
+        return ['error' => 'User already exists'];
     }
 
     $res = create_user($email, $password, $firstname, $lastname, $role);
     if (!$res) {
         http_response_code(500);
-        return json_encode(['error' => 'Failed to create user']);
+        return ['error' => 'Failed to create user'];
     }
 
     http_response_code(200);
-    return json_encode(['success' => 'User created']);
+    return ['success' => 'User created'];
 });
 
 function create_user($email, $password, $firstname, $lastname, $role) {
