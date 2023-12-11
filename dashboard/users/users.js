@@ -2,8 +2,10 @@ import {$get, fetchSession, navigate} from "../../utils.js";
 
 (async () => {
     const session = await fetchSession()
-    if (!session || session.role !== 'Admin')
+    if (!session)
         navigate('/')
+    else if (session.role === 'Admin')
+        navigate('/dashboard')
 })();
 
 (async () => {
