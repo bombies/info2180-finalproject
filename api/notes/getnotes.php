@@ -10,7 +10,7 @@ handle_get(function (){
 
     . "JOIN users\n"
 
-    . "ON notes.created_by = users.id;";
+    . "ON notes.created_by = users.id WHERE notes.contact_id = ?;";
     $notes = query($sql, [$contactid])->fetchAll(PDO::FETCH_ASSOC);
     return json_encode($notes);
 })
