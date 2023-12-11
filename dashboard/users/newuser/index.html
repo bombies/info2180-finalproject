@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>INFO2180 Project 2 - Users</title>
-    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="../../../styles.css">
 </head>
 <body>
 <header class="overhead">
@@ -66,27 +66,63 @@
         </div>
     </aside>
     <section class="main-layout">
-        <div class="dashboard-heading">
-            <h1>Users</h1>
-            <a href="/info2180-finalproject/dashboard/users/newuser">
-                <button>Register New User</button>
-            </a>
-        </div>
-        <div class="default-container">
-            <table>
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Created</th>
-                </tr>
-                </thead>
-                <tbody id="users-table-body"></tbody>
-            </table>
+        <h1>New User</h1>
+        <div>
+            <form id="registration-form">
+                <div class="flex gap-4">
+                    <label for="first_name">
+                        First Name
+                        <input id="first_name"
+                               name="first_name"
+                               placeholder="Enter First name"
+                               required
+                        >
+                    </label>
+                    <label for="last_name">
+                        Last Name
+                        <input id="last_name"
+                               name="last_name"
+                               placeholder="Enter last name"
+                               required
+                        >
+                    </label>
+                </div>
+                <div class="flex gap-4">
+                    <label for="email">
+                        Email
+                        <input id="email"
+                               type="email"
+                               name="email"
+                               placeholder="Enter email address"
+                               required
+                        >
+                    </label>
+                    <label for="password">
+                        Password
+                        <input id="password"
+                               type="password"
+                               name="password"
+                               minlength="8"
+                               placeholder="Enter password"
+                               required
+                        >
+                    </label>
+                </div>
+                <label for="Role">
+                    Role
+                    <select id="Role" required>
+                        <option value="Member">Member</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                </label>
+                <div class="flex">
+                    <button type="submit">Save</button>
+                </div>
+                <div id="error"></div>
+            </form>
         </div>
     </section>
 </main>
-<script type="module" src="users.js"></script>
+<script type="module" src="../../../logout-handler.js"></script>
 </body>
 </html>
